@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Home, Brain, BookOpen, User } from "lucide-react-native";
+import { Home, Brain, BookOpen, User, Wrench } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 
 export default function TabLayout() {
@@ -24,10 +24,10 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="tools"
         options={{
-          title: "Home",
-          tabBarIcon: ({ size, color }) => <Home size={size} color={color} />,
+          title: "Tools",
+          tabBarIcon: ({ size, color }) => <Wrench size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -35,6 +35,13 @@ export default function TabLayout() {
         options={{
           title: "Simulators",
           tabBarIcon: ({ size, color }) => <Brain size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ size, color }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen

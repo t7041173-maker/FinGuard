@@ -209,7 +209,7 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
     <View style={styles.container}>
       {/* Simplified Pyramid View */}
       <View style={styles.pyramidContainer}>
-        <Text style={styles.pyramidTitle}>Pyramid Structure</Text>
+        {/* <Text style={styles.pyramidTitle}>Pyramid Structure</Text> */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.pyramidContent}>
             {pyramidLevels.map((level, levelIndex) => (
@@ -249,7 +249,7 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
       </View>
 
       {/* Legend */}
-      <View style={styles.legend}>
+      {/* <View style={styles.legend}>
         <Text style={styles.legendTitle}>Legend</Text>
         <View style={styles.legendItems}>
           <View style={styles.legendItem}>
@@ -277,10 +277,10 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
             <Text style={styles.legendText}>Lost Money</Text>
           </View>
         </View>
-      </View>
+      </View> */}
 
       {/* Tree View (SVG) */}
-      <View style={styles.treeContainer}>
+      {/* <View style={styles.treeContainer}>
         <Text style={styles.treeTitle}>Network Tree</Text>
         <ScrollView
           horizontal
@@ -297,7 +297,7 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
             </Svg>
           </ScrollView>
         </ScrollView>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
   },
   pyramidContainer: {
     marginBottom: 20,
+    alignItems: "center",
   },
   pyramidTitle: {
     fontSize: 16,

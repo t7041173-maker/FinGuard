@@ -18,6 +18,7 @@ import {
   GraduationCap,
 } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
+import { router } from "expo-router";
 
 const EducationScreen = () => {
   const { theme } = useTheme();
@@ -141,31 +142,46 @@ const EducationScreen = () => {
             },
           ]}
         >
-          <Text style={[styles.glossaryTerm, { color: theme.colors.text }]}>
-            {item.term}
-          </Text>
-          <Text
-            style={[styles.glossaryDefinition, { color: theme.colors.text }]}
+          <TouchableOpacity
+            key={index}
+            onPress={() => router.push("/pages/FraudDetails")}
+            activeOpacity={0.8}
           >
-            {item.definition}
-          </Text>
-          <View
-            style={[
-              styles.exampleContainer,
-              {
-                backgroundColor: theme.colors.surface,
-                borderColor: theme.colors.border,
-                borderWidth: 0.2,
-              },
-            ]}
-          >
-            <Text style={styles.exampleIcon}>💡</Text>
-            <Text
-              style={[styles.glossaryExample, { color: theme.colors.text }]}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+              }}
             >
-              {item.example}
+              <Text style={[styles.glossaryTerm, { color: theme.colors.text }]}>
+                {item.term}
+              </Text>
+              <ExternalLink size={22} color={theme.colors.textSecondary} />
+            </View>
+            <Text
+              style={[styles.glossaryDefinition, { color: theme.colors.text }]}
+            >
+              {item.definition}
             </Text>
-          </View>
+            <View
+              style={[
+                styles.exampleContainer,
+                {
+                  backgroundColor: theme.colors.surface,
+                  borderColor: theme.colors.border,
+                  borderWidth: 0.2,
+                },
+              ]}
+            >
+              <Text style={styles.exampleIcon}>💡</Text>
+              <Text
+                style={[styles.glossaryExample, { color: theme.colors.text }]}
+              >
+                {item.example}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       ))}
     </View>

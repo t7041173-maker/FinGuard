@@ -16,19 +16,14 @@ import {
   CreditCard,
   TrendingUp,
   TriangleAlert as AlertTriangle,
-  DollarSign,
   ChartBar as BarChart3,
-  Users,
-  Lock,
-  Smartphone,
   Building,
   ChartPie as PieChart,
   Calculator,
   Zap,
-  Star,
   ChevronRight,
-  Target,
-  Award,
+  File,
+  Link,
 } from "lucide-react-native";
 
 const { width, height } = Dimensions.get("window");
@@ -44,67 +39,23 @@ interface SimulatorModule {
 
 const simulatorModules: SimulatorModule[] = [
   {
-    id: "ponzi-scheme-simulator",
-    title: "Ponzi Scheme Simulator",
+    id: "DocHashVerifier",
+    title: "Document Hash Verifier",
+    description: "Verify the integrity of documents using hash functions",
+    icon: File,
+    category: "fraud",
+    route: "/pages/DocHashVerifierTool",
+  },
+  {
+    id: "url-analysis-tool",
+    title: "URL Analyzer",
     description:
       "Master advanced fraud detection techniques using machine learning algorithms",
-    icon: AlertTriangle,
+    icon: Link,
     category: "fraud",
-    route: "/pages/PonziSimulator",
+    route: "/pages/UrlAnalysisTool",
   },
-  {
-    id: "charity-scam-simulator",
-    title: "Charity Scam Simulator",
-    description:
-      "Master advanced fraud detection techniques using machine learning algorithms",
-    icon: CreditCard,
-    category: "fraud",
-    route: "/pages/charityScamSimulator",
-  },
-  {
-    id: "identity-theft",
-    title: "Identity Theft Simulation",
-    description:
-      "Learn to identify and prevent sophisticated identity theft schemes",
-    icon: Users,
-    category: "fraud",
-    route: "/pages/identityTheftSimulator",
-  },
-  {
-    id: "phishing-simulation",
-    title: "Phishing Simulation",
-    description: "Detect and counter advanced phishing attacks.",
-    icon: Smartphone,
-    category: "fraud",
-    route: "/pages/PhishingSimulator",
-  },
-  {
-    id: "lottery-fraud-simulator",
-    title: "Lottery Fraud Simulation",
-    description:
-      "Analyze complex transaction patterns to identify fraudulent activities",
-    icon: AlertTriangle,
-    category: "fraud",
-    route: "/pages/lotteryFraudSimulator",
-  },
-  {
-    id: "loan-fraud-simulator",
-    title: "Loan Fraud Simulation",
-    description:
-      "Analyze complex transaction patterns to identify fraudulent activities",
-    icon: DollarSign,
-    category: "fraud",
-    route: "/pages/loanScamSimulator",
-  },
-  {
-    id: "portfolio-management",
-    title: "Portfolio Optimization",
-    description:
-      "Build and optimize investment portfolios using modern portfolio theory",
-    icon: PieChart,
-    category: "financial",
-    route: "/simulators/portfolio-management",
-  },
+
   {
     id: "risk-assessment",
     title: "Risk Assessment & Management",
@@ -133,19 +84,6 @@ const simulatorModules: SimulatorModule[] = [
     route: "/simulators/loan-calculator",
   },
 ];
-
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Beginner":
-      return "#10B981";
-    case "Intermediate":
-      return "#F59E0B";
-    case "Advanced":
-      return "#EF4444";
-    default:
-      return "#6B7280";
-  }
-};
 
 const ModuleCard: React.FC<{ module: SimulatorModule; index: number }> = ({
   module,
@@ -183,18 +121,6 @@ const ModuleCard: React.FC<{ module: SimulatorModule; index: number }> = ({
           <Text style={styles.moduleDescription} numberOfLines={2}>
             {module.description}
           </Text>
-
-          {/* <View style={styles.cardMeta}>
-            <View
-              style={[
-                styles.difficultyBadge,
-                { backgroundColor: getDifficultyColor(module.difficulty) },
-              ]}
-            >
-              <Text style={styles.difficultyText}>{module.difficulty}</Text>
-            </View>
-            <Text style={styles.durationText}>{module.duration}</Text>
-          </View> */}
         </View>
 
         <ChevronRight size={20} color="#9CA3AF" />
@@ -210,9 +136,6 @@ const CategoryHeader: React.FC<{
   color: string;
 }> = ({ title, subtitle, icon: Icon, color }) => (
   <View style={styles.categoryHeader}>
-    {/* <View style={[styles.categoryIcon, { backgroundColor: color }]}>
-      <Icon size={20} color="#FFFFFF" strokeWidth={2} />
-    </View> */}
     <View style={styles.categoryInfo}>
       <Text style={styles.categoryTitle}>{title}</Text>
       <Text style={styles.categorySubtitle}>{subtitle}</Text>
@@ -244,21 +167,6 @@ export default function SimulatorsScreen() {
               </Text>
             </View>
           </View>
-
-          {/* <View style={styles.statsContainer}>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>{simulatorModules.length}</Text>
-              <Text style={styles.statLabel}>Simulators</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>2</Text>
-              <Text style={styles.statLabel}>Categories</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>4.7</Text>
-              <Text style={styles.statLabel}>Avg Rating</Text>
-            </View>
-          </View> */}
         </View>
       </View>
 
