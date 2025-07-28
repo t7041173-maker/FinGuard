@@ -16,6 +16,9 @@ import {
   Building2,
   Shield,
   GraduationCap,
+  Globe,
+  Phone,
+  Mail,
 } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { router } from "expo-router";
@@ -39,20 +42,105 @@ const EducationScreen = () => {
       definition:
         "A business model that recruits members via a promise of payments for enrolling others into the scheme, rather than supplying investments or sale of products.",
       example:
-        "Multi-level marketing schemes that focus more on recruitment than product sales.",
+        "A pyramid scheme might involve members paying an entry fee and earning money solely by bringing in new recruits.",
     },
     {
-      term: "MLM (Multi-Level Marketing)",
+      term: "Identity Theft",
       definition:
-        "A legitimate business strategy where revenue is generated from a non-salaried workforce selling products, but can become illegal if it focuses primarily on recruitment.",
-      example: "Companies like Amway and Tupperware use MLM models legally.",
-    },
-    {
-      term: "Red Flags",
-      definition:
-        "Warning signs that indicate a potential scam or fraudulent investment opportunity.",
+        "The fraudulent acquisition and use of someone's personal information, usually for financial gain.",
       example:
-        "Guaranteed high returns, pressure to recruit others, lack of transparency.",
+        "Hackers used stolen social security numbers to open credit cards in victims’ names.",
+    },
+    {
+      term: "Credit Card Fraud",
+      definition:
+        "Unauthorized use of another person's credit card information to make purchases or withdraw funds.",
+      example:
+        "A fraudster used a skimming device at an ATM to steal card data and make unauthorized purchases.",
+    },
+    {
+      term: "Phishing Scam",
+      definition:
+        "A cyber attack where criminals pose as legitimate institutions to lure individuals into providing sensitive data such as passwords and banking information.",
+      example:
+        "A victim received an email that looked like it was from their bank, asking them to confirm account details via a fake link.",
+    },
+    {
+      term: "Investment Fraud",
+      definition:
+        "Deceptive practices to convince individuals to invest in worthless, nonexistent, or misrepresented investment opportunities.",
+      example:
+        "The company promised unrealistic returns on fake cryptocurrency investments.",
+    },
+    {
+      term: "Mortgage Fraud",
+      definition:
+        "A type of fraud involving the misrepresentation of information to obtain a mortgage loan or better loan terms dishonestly.",
+      example:
+        "A buyer lied about their income and assets to get approved for a larger mortgage.",
+    },
+    {
+      term: "Tax Scam",
+      definition:
+        "A fraudulent scheme where scammers promise large tax refunds or reduced liabilities through false information or illegal methods.",
+      example:
+        "A fake tax preparer filed false returns to claim inflated deductions for clients and took a cut of the refunds.",
+    },
+    {
+      term: "Lottery and Sweepstakes Fraud",
+      definition:
+        "Scammers tell victims they’ve won a lottery or prize but must pay fees or taxes upfront to claim it.",
+      example:
+        "The victim received a letter claiming they won a foreign lottery and had to wire money for processing fees.",
+    },
+    {
+      term: "Charity Scam",
+      definition:
+        "Fraudulent solicitation of donations for causes that don’t exist or don’t benefit the stated beneficiaries.",
+      example:
+        "After a natural disaster, scammers created fake websites to collect donations from well-meaning individuals.",
+    },
+    {
+      term: "Debt Relief Scam",
+      definition:
+        "A scheme that falsely promises to reduce or eliminate a person’s debt in exchange for upfront fees, but delivers little or no actual relief.",
+      example:
+        "The company charged high fees and claimed they would negotiate with creditors but never followed through.",
+    },
+    {
+      term: "Fake Check Scam",
+      definition:
+        "A scam where the victim is sent a counterfeit check and asked to send back money before the check clears and bounces.",
+      example:
+        "A victim was hired for a mystery shopper job, sent a fake check, and asked to send back a portion in gift cards.",
+    },
+    {
+      term: "Online Banking Fraud",
+      definition:
+        "Unauthorized access to or manipulation of online banking accounts through hacking, phishing, or social engineering.",
+      example:
+        "Hackers used stolen credentials to transfer funds from the victim’s bank account to overseas accounts.",
+    },
+    {
+      term: "Employment Fraud",
+      definition:
+        "Scams involving fake job offers that require payment for training, equipment, or background checks, but never lead to actual employment.",
+      example:
+        "A victim paid for a work-from-home training kit that never arrived and was unable to contact the employer again.",
+    },
+    {
+      term: "Student Loan Scam",
+      definition:
+        "A fraud involving fake companies that offer to reduce or erase student loan debt in exchange for fees but provide no actual service.",
+      example:
+        "The student was tricked into paying a fee for loan forgiveness assistance that never materialized.",
+    },
+    {
+      term: "Old Tax Regime",
+      definition:
+        "A tax system where taxpayers can reduce their taxable income through various deductions such as under Sections 80C, 80D, HRA, LTA, and home loan interest.",
+      example:
+        "A taxpayer reduced their tax by ₹1.5L using 80C and another ₹2L using home loan interest.",
     },
   ];
 
@@ -144,7 +232,9 @@ const EducationScreen = () => {
         >
           <TouchableOpacity
             key={index}
-            onPress={() => router.push("/pages/FraudDetails")}
+            onPress={() =>
+              router.push("/pages/FraudDetails?fraud=" + item.term)
+            }
             activeOpacity={0.8}
           >
             <View
@@ -184,6 +274,31 @@ const EducationScreen = () => {
           </TouchableOpacity>
         </View>
       ))}
+      <View style={styles.emergencyCard}>
+        <Text style={styles.emergencyTitle}>🚨 Report Fraud Immediately</Text>
+        <Text style={styles.emergencyText}>
+          If you've been a victim of fraud or suspect fraudulent activity,
+          report it immediately through these official channels:
+        </Text>
+        <View style={styles.emergencyContacts}>
+          <View style={styles.contactItem}>
+            <Phone size={16} color="#EF4444" />
+            <Text style={styles.emergencyContact}>
+              Cyber Crime Helpline: 1930
+            </Text>
+          </View>
+          <View style={styles.contactItem}>
+            <Globe size={16} color="#EF4444" />
+            <Text style={styles.emergencyContact}>cybercrime.gov.in</Text>
+          </View>
+          <View style={styles.contactItem}>
+            <Mail size={16} color="#EF4444" />
+            <Text style={styles.emergencyContact}>
+              report.phishing@rbi.org.in
+            </Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 
@@ -524,6 +639,40 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#b8b8b8",
     lineHeight: 18,
+  },
+  emergencyCard: {
+    backgroundColor: "#FEF2F2",
+    marginHorizontal: 2,
+    marginBottom: 24,
+    padding: 24,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#FECACA",
+  },
+  emergencyTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#DC2626",
+    marginBottom: 12,
+  },
+  emergencyText: {
+    fontSize: 14,
+    color: "#7F1D1D",
+    marginBottom: 16,
+    lineHeight: 20,
+  },
+  emergencyContacts: {
+    gap: 8,
+  },
+  contactItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  emergencyContact: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#7F1D1D",
   },
 });
 
