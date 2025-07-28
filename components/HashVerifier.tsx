@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Search, CheckCircle2, XCircle } from "lucide-react-native";
 import { useDocumentStorage } from "../hooks/useDocumentStorage";
+import { BACKEND_URL } from "./config";
 
 async function verifyDocument(data: any) {
   const response = await fetch("http://localhost:3000/api/verify", {
@@ -61,7 +62,7 @@ export const HashVerifier = ({
 
   // Update the backend connection check to use your local IP
   useEffect(() => {
-    fetch("http://192.168.0.105:5000/api/health")
+    fetch(`${BACKEND_URL}/api/health`)
       .then((res) => {
         if (res.ok) setBackendConnected(true);
       })
@@ -82,7 +83,7 @@ export const HashVerifier = ({
     if (!isMatch) {
       try {
         const response = await fetch(
-          `http://192.168.0.105:5000/api/documents/hash/${normalizedInput}`
+          `${BACKEND_URL}/api/documents/hash/${normalizedInput}`
         );
         if (response.ok) {
           const backendDoc = await response.json();

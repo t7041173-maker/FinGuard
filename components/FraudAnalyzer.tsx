@@ -32,6 +32,7 @@ import { Badge } from "./ui/Badge";
 import { Progress } from "./ui/Progress";
 import { Alert as CustomAlert, AlertTitle, AlertDescription } from "./ui/Alert";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
+import { BACKEND_URL } from "./config";
 
 interface AnalysisResult {
   score: number;
@@ -77,11 +78,8 @@ export function FraudAnalyzer() {
     useState<AnalysisHistory | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // IMPORTANT: For Expo Go on a physical device, use your computer's local IP address below (not localhost)
-  const BACKEND_URL = "http://192.168.1.12:4000"; // <-- Your actual computer IP
-
   useEffect(() => {
-    fetch("http://192.168.1.12:4000/health")
+    fetch(`${BACKEND_URL}/health`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.status === "ok") {
@@ -269,7 +267,7 @@ export function FraudAnalyzer() {
     setProgress(0);
     setEmailResult(null);
     try {
-      const response = await fetch("http://192.168.0.105:4000/api/check", {
+      const response = await fetch(`${BACKEND_URL}/api/check`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: emailContent.trim() }),
@@ -327,7 +325,7 @@ export function FraudAnalyzer() {
     setProgress(0);
     setUrlResult(null);
     try {
-      const response = await fetch("http://192.168.0.105:4000/api/check", {
+      const response = await fetch(`${BACKEND_URL}/api/check`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: websiteUrl.trim() }),

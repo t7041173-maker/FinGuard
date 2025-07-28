@@ -16,6 +16,7 @@ import Animated, {
   interpolate,
 } from "react-native-reanimated";
 import { AlertTriangle, ArrowRight } from "lucide-react-native";
+import { checkBackendConnection } from "../components/config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -31,6 +32,10 @@ export default function WelcomeScreen() {
     );
 
     fadeAnimation.value = withTiming(1, { duration: 1500 });
+  }, []);
+
+  useEffect(() => {
+    checkBackendConnection();
   }, []);
 
   const pulseStyle = useAnimatedStyle(() => {

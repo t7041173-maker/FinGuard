@@ -7,6 +7,7 @@ import { HashVerifier } from "./HashVerifier";
 import { VerificationReport, VerificationResult } from "./VerificationReport";
 import { DocumentVault } from "./DocumentVault";
 import { useDocumentStorage } from "../hooks/useDocumentStorage";
+import { BACKEND_URL } from "./config";
 
 interface FileInfo {
   uri: string;
@@ -18,7 +19,7 @@ interface FileInfo {
 async function saveDocumentToBackend(document: any) {
   console.log("Sending to backend:", document);
   try {
-    const response = await fetch("http://192.168.9.63:5000/api/documents", {
+    const response = await fetch(`${BACKEND_URL}/api/documents`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(document),

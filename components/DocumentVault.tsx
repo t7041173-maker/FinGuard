@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Save, Clock, FileText, Trash2, Shield } from "lucide-react-native";
 import { useDocumentStorage, SavedDocument } from "../hooks/useDocumentStorage";
+import { BACKEND_URL } from "./config";
 
 interface FileInfo {
   uri: string;
@@ -27,7 +28,7 @@ interface DocumentVaultProps {
 async function saveDocumentToBackend(document: any) {
   console.log("Sending to backend:", document);
   try {
-    const response = await fetch("http://192.168.0.105:5000/api/documents", {
+    const response = await fetch(`${BACKEND_URL}/api/documents`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(document),
