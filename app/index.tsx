@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import Animated, {
   useSharedValue,
@@ -17,10 +15,16 @@ import Animated, {
 } from "react-native-reanimated";
 import { AlertTriangle, ArrowRight } from "lucide-react-native";
 import { checkBackendConnection } from "../components/config";
+import { Container } from "../components/ui/Container";
+import { Typography } from "../components/ui/Typography";
+import { Surface } from "../components/ui/Surface";
+import { Spacing } from "../components/ui/Spacing";
+import { useTheme } from "../contexts/ThemeContext";
 
 const { width, height } = Dimensions.get("window");
 
 export default function WelcomeScreen() {
+  const { theme } = useTheme();
   const pulseAnimation = useSharedValue(0);
   const fadeAnimation = useSharedValue(0);
 
@@ -52,145 +56,106 @@ export default function WelcomeScreen() {
   });
 
   return (
-    <LinearGradient
-      colors={["#1a1a2e", "#16213e", "#0f3460"]}
-      style={styles.container}
-    >
+    <Container variant="gradient" padding="xl">
       <Animated.View style={[styles.content, fadeStyle]}>
         <Animated.View style={[styles.logoContainer, pulseStyle]}>
-          <AlertTriangle size={80} color="#ff6b6b" />
-          <Text style={styles.title}>PonziXposed</Text>
-          <Text style={styles.subtitle}>The Fraud Unfolded</Text>
+          <Surface variant="elevated" padding="xl" radius="xl" style={styles.logoSurface}>
+            <AlertTriangle size={80} color="#ff6b6b" />
+          </Surface>
+          <Spacing size="lg" />
+          <Typography variant="h1" weight="bold" align="center">
+            PonziXposed
+          </Typography>
+          <Typography variant="subtitle" color="secondary" align="center">
+            The Fraud Unfolded
+          </Typography>
         </Animated.View>
 
-        <View style={styles.sloganContainer}>
-          <Text style={styles.slogan}>"Play the scam to spot the scam"</Text>
-          <Text style={styles.description}>
+        <View style={styles.centerContent}>
+          <Typography variant="h3" weight="semibold" color="accent" align="center">
+            "Play the scam to spot the scam"
+          </Typography>
+          <Spacing size="md" />
+          <Typography variant="body" color="secondary" align="center">
             Learn fraud. Stop fraud. Be financially fearless.
-          </Text>
+          </Typography>
         </View>
 
-        <View style={styles.featuresContainer}>
+        <Surface variant="elevated" padding="lg" radius="lg">
           <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🧠</Text>
-            <Text style={styles.featureText}>Interactive Simulation</Text>
+            <Typography variant="h3">🧠</Typography>
+            <Spacing horizontal size="md" />
+            <Typography variant="body" weight="medium">
+              Interactive Simulation
+            </Typography>
           </View>
+          <Spacing size="md" />
           <View style={styles.feature}>
-            <Text style={styles.featureIcon}>👁️</Text>
-            <Text style={styles.featureText}>Visual Learning</Text>
+            <Typography variant="h3">👁️</Typography>
+            <Spacing horizontal size="md" />
+            <Typography variant="body" weight="medium">
+              Visual Learning
+            </Typography>
           </View>
+          <Spacing size="md" />
           <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🛡️</Text>
-            <Text style={styles.featureText}>Fraud Protection</Text>
+            <Typography variant="h3">🛡️</Typography>
+            <Spacing horizontal size="md" />
+            <Typography variant="body" weight="medium">
+              Fraud Protection
+            </Typography>
           </View>
-        </View>
+        </Surface>
 
         <TouchableOpacity
-          style={styles.startButton}
+          style={[styles.startButton, theme.shadows.lg]}
           onPress={() => router.push("/(tabs)")}
           activeOpacity={0.8}
         >
-          <LinearGradient
-            colors={["#ff6b6b", "#ee5a52"]}
-            style={styles.buttonGradient}
-          >
-            <Text style={styles.buttonText}>Start Learning</Text>
+          <Surface variant="elevated" padding="lg" radius="xl" style={styles.buttonSurface}>
+            <Typography variant="subtitle" weight="bold" style={{ color: "white" }}>
+              Start Learning
+            </Typography>
+            <Spacing horizontal size="sm" />
             <ArrowRight size={24} color="white" />
-          </LinearGradient>
+          </Surface>
         </TouchableOpacity>
       </Animated.View>
-    </LinearGradient>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   content: {
     flex: 1,
     justifyContent: "space-around",
     alignItems: "center",
-    paddingHorizontal: 30,
-    paddingVertical: 60,
   },
   logoContainer: {
     alignItems: "center",
-    marginTop: 40,
   },
-  title: {
-    fontSize: 42,
-    fontWeight: "bold",
-    color: "white",
-    marginTop: 20,
-    textAlign: "center",
+  logoSurface: {
+    backgroundColor: "rgba(255, 107, 107, 0.1)",
+    borderColor: "#ff6b6b",
+    borderWidth: 2,
   },
-  subtitle: {
-    fontSize: 18,
-    color: "#b8b8b8",
-    marginTop: 8,
-    textAlign: "center",
-  },
-  sloganContainer: {
+  centerContent: {
     alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  slogan: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#4ecdc4",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  description: {
-    fontSize: 16,
-    color: "#b8b8b8",
-    textAlign: "center",
-    lineHeight: 24,
-  },
-  featuresContainer: {
-    width: "100%",
-    paddingHorizontal: 20,
   },
   feature: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 8,
-    paddingHorizontal: 20,
-  },
-  featureIcon: {
-    fontSize: 24,
-    marginRight: 15,
-  },
-  featureText: {
-    fontSize: 16,
-    color: "white",
-    fontWeight: "500",
   },
   startButton: {
     width: width * 0.8,
-    height: 60,
-    borderRadius: 30,
     overflow: "hidden",
-    elevation: 5,
-    shadowColor: "#ff6b6b",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
   },
-  buttonGradient: {
-    flex: 1,
+  buttonSurface: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 30,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-    marginRight: 10,
+    backgroundColor: "#ff6b6b",
+    paddingVertical: 20,
+    paddingHorizontal: 32,
   },
 });

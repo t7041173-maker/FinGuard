@@ -1,15 +1,12 @@
 import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Brain,
   Flag,
@@ -21,6 +18,11 @@ import {
 } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import ThemeToggle from "../../components/ThemeToggle";
+import { Container } from "../../components/ui/Container";
+import { Typography } from "../../components/ui/Typography";
+import { Surface } from "../../components/ui/Surface";
+import { Spacing } from "../../components/ui/Spacing";
+import { IconButton } from "../../components/ui/IconButton";
 
 const { width } = Dimensions.get("window");
 
@@ -68,110 +70,165 @@ const HomeScreen = () => {
   ];
 
   return (
-    <LinearGradient
-      colors={[theme.colors.background[0], theme.colors.background[1]]}
-      style={styles.container}
-    >
-      <SafeAreaView style={styles.safeArea}>
+    <Container variant="gradient" padding="none">
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
-          <View style={styles.header}>
+          <View style={[styles.header, { paddingHorizontal: theme.spacing.md }]}>
             <View>
-              <Text style={[styles.greeting, { color: theme.colors.text }]}>
+              <Typography variant="h2" weight="bold">
                 Welcome back!
-              </Text>
-              <Text
-                style={[styles.subtitle, { color: theme.colors.textSecondary }]}
-              >
+              </Typography>
+              <Spacing size="xs" />
+              <Typography variant="body" color="secondary">
                 Ready to expose some fraud?
-              </Text>
+              </Typography>
             </View>
-            <TouchableOpacity style={styles.notificationButton}>
+            <IconButton variant="ghost" onPress={toggleTheme}>
               <ThemeToggle />
-            </TouchableOpacity>
+            </IconButton>
           </View>
 
+          <Spacing size="lg" />
+
           {/* Stats Section */}
-          <View style={styles.statsContainer}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
               Impact Statistics
-            </Text>
+            </Typography>
+            <Spacing size="md" />
             <View style={styles.statsRow}>
               {stats.map((stat, index) => (
-                <View
+                <Surface
                   key={index}
-                  style={[
-                    styles.statCard,
-                    { backgroundColor: theme.colors.card },
-                  ]}
+                  variant="elevated"
+                  padding="md"
+                  radius="lg"
+                  style={styles.statCard}
                 >
                   <stat.icon size={24} color="#4ecdc4" />
-                  <Text
-                    style={[styles.statValue, { color: theme.colors.text }]}
-                  >
+                  <Spacing size="sm" />
+                  <Typography variant="h3" weight="bold" align="center">
                     {stat.value}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.statLabel,
-                      { color: theme.colors.textSecondary },
-                    ]}
-                  >
+                  </Typography>
+                  <Typography variant="caption" color="secondary" align="center">
                     {stat.label}
-                  </Text>
-                </View>
+                  </Typography>
+                </Surface>
               ))}
             </View>
           </View>
 
+          <Spacing size="xl" />
+
           {/* Features Grid */}
-          <View style={styles.featuresContainer}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
               Explore Features
-            </Text>
+            </Typography>
+            <Spacing size="md" />
             <View style={styles.featuresGrid}>
               {features.map((feature) => (
                 <TouchableOpacity
                   key={feature.id}
-                  style={styles.featureCard}
+                  style={[styles.featureCard, theme.shadows.md]}
                   onPress={() => router.push(feature.route as any)}
                   activeOpacity={0.8}
                 >
-                  <LinearGradient
-                    colors={[feature.color, `${feature.color}CC`]}
-                    style={styles.featureGradient}
+                  <Surface
+                    variant="elevated"
+                    padding="lg"
+                    radius="xl"
+                    style={[styles.featureContent, { backgroundColor: feature.color }]}
                   >
                     <feature.icon size={32} color="white" />
-                    <Text
-                      style={[
-                        { color: theme.colors.text },
-                        styles.featureTitle,
-                      ]}
-                    >
+                    <Spacing size="md" />
+                    <Typography variant="subtitle" weight="bold" style={{ color: "white" }} align="center">
                       {feature.title}
-                    </Text>
-                    <Text style={styles.featureDescription}>
+                    </Typography>
+                    <Spacing size="sm" />
+                    <Typography variant="caption" style={{ color: "rgba(255, 255, 255, 0.8)" }} align="center">
                       {feature.description}
-                    </Text>
-                  </LinearGradient>
+                    </Typography>
+                  </Surface>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
 
+          <Spacing size="xl" />
+
           {/* Quick Tips */}
-          <View style={styles.tipsContainer}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
               Daily Tip
-            </Text>
-            <View
-              style={[styles.tipCard, { backgroundColor: theme.colors.card }]}
-            >
-              <Text style={[styles.tipIcon, { color: theme.colors.text }]}>
-                💡
-              </Text>
+            </Typography>
+            <Spacing size="md" />
+            <Surface variant="elevated" padding="lg" radius="lg">
               <View style={styles.tipContent}>
-                <Text style={[styles.tipTitle, { color: theme.colors.text }]}>
+                <Typography variant="h4">💡</Typography>
+                <Spacing horizontal size="md" />
+                <View style={{ flex: 1 }}>
+                  <Typography variant="subtitle" weight="semibold">
+                    Red Flag Alert!
+                  </Typography>
+                  <Spacing size="sm" />
+                  <Typography variant="body" color="secondary">
+                    If someone promises "guaranteed returns" with no risk, it's
+                    likely a scam. Real investments always carry some level of
+                    risk.
+                  </Typography>
+                </View>
+              </View>
+            </Surface>
+          </View>
+
+          <Spacing size="xl" />
+        </ScrollView>
+    </Container>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  statCard: {
+    flex: 1,
+    alignItems: "center",
+  },
+  featuresGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 16,
+  },
+  featureCard: {
+    width: (width - 50) / 2,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+  featureContent: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 160,
+  },
+  tipContent: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+});
+
+export default HomeScreen;
+
                   Red Flag Alert!
                 </Text>
                 <Text

@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   BookOpen,
   Lightbulb,
@@ -22,6 +19,10 @@ import {
 } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { router } from "expo-router";
+import { Container } from "../../components/ui/Container";
+import { Typography } from "../../components/ui/Typography";
+import { Surface } from "../../components/ui/Surface";
+import { Spacing } from "../../components/ui/Spacing";
 
 const EducationScreen = () => {
   const { theme } = useTheme();
@@ -219,19 +220,14 @@ const EducationScreen = () => {
   const renderGlossary = () => (
     <View>
       {glossaryItems.map((item, index) => (
-        <View
+        <Surface
           key={index}
-          style={[
-            styles.glossaryCard,
-            {
-              backgroundColor: theme.colors.card,
-              borderColor: theme.colors.border,
-              borderWidth: 0.4,
-            },
-          ]}
+          variant="outlined"
+          padding="lg"
+          radius="lg"
+          style={{ marginBottom: theme.spacing.md }}
         >
           <TouchableOpacity
-            key={index}
             onPress={() =>
               router.push("/pages/FraudDetails?fraud=" + item.term)
             }
@@ -244,30 +240,281 @@ const EducationScreen = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Text style={[styles.glossaryTerm, { color: theme.colors.text }]}>
+              <Typography variant="subtitle" weight="semibold" color="accent">
                 {item.term}
-              </Text>
+              </Typography>
               <ExternalLink size={22} color={theme.colors.textSecondary} />
             </View>
-            <Text
-              style={[styles.glossaryDefinition, { color: theme.colors.text }]}
-            >
+            <Spacing size="sm" />
+            <Typography variant="body">
               {item.definition}
-            </Text>
-            <View
-              style={[
-                styles.exampleContainer,
-                {
-                  backgroundColor: theme.colors.surface,
-                  borderColor: theme.colors.border,
-                  borderWidth: 0.2,
-                },
-              ]}
+            </Typography>
+            <Spacing size="md" />
+            <Surface variant="default" padding="md" radius="sm" style={{ backgroundColor: theme.colors.surface }}>
+              <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+                <Typography variant="body">💡</Typography>
+                <Spacing horizontal size="sm" />
+                <Typography variant="caption" style={{ flex: 1 }}>
+                  {item.example}
+                </Typography>
+              </View>
+            </Surface>
+          </TouchableOpacity>
+        </Surface>
+      ))}
+      
+      <Surface variant="elevated" padding="lg" radius="lg" style={{ backgroundColor: "#FEF2F2", borderColor: "#FECACA", borderWidth: 1 }}>
+        <Typography variant="h4" weight="bold" style={{ color: "#DC2626" }}>
+          🚨 Report Fraud Immediately
+        </Typography>
+        <Spacing size="md" />
+        <Typography variant="body" style={{ color: "#7F1D1D" }}>
+          If you've been a victim of fraud or suspect fraudulent activity,
+          report it immediately through these official channels:
+        </Typography>
+        <Spacing size="md" />
+        <View style={styles.emergencyContacts}>
+          <View style={styles.contactItem}>
+            <Phone size={16} color="#EF4444" />
+            <Typography variant="body" weight="medium" style={{ color: "#7F1D1D" }}>
+              Cyber Crime Helpline: 1930
+            </Typography>
+          </View>
+          <View style={styles.contactItem}>
+            <Globe size={16} color="#EF4444" />
+            <Typography variant="body" weight="medium" style={{ color: "#7F1D1D" }}>
+              cybercrime.gov.in
+            </Typography>
+          </View>
+          <View style={styles.contactItem}>
+            <Mail size={16} color="#EF4444" />
+            <Typography variant="body" weight="medium" style={{ color: "#7F1D1D" }}>
+              report.phishing@rbi.org.in
+            </Typography>
+          </View>
+        </View>
+      </Surface>
+    </View>
+  );
+
+  const renderTips = () => (
+    <View>
+      {tips.map((tip, index) => (
+        <Surface
+          key={index}
+          variant="outlined"
+          padding="lg"
+          radius="lg"
+          style={{ marginBottom: theme.spacing.md }}
+        >
+          <View style={styles.tipHeader}>
+            {typeof tip.icon === "string" ? (
+              <Typography variant="h3">{tip.icon}</Typography>
+            ) : (
+              <tip.icon size={24} color="#4ecdc4" />
+            )}
+            <Spacing horizontal size="md" />
+            <Typography variant="subtitle" weight="semibold" style={{ flex: 1 }}>
+              {tip.title}
+            </Typography>
+          </View>
+          <Spacing size="md" />
+          <Typography variant="body" color="secondary">
+            {tip.description}
+          </Typography>
+        </Surface>
+      ))}
+    </View>
+  );
+
+  const renderResources = () => (
+    <View>
+      {resources.map((resource, index) => (
+        <Surface
+          key={index}
+          variant="outlined"
+          padding="lg"
+          radius="lg"
+          style={{ marginBottom: theme.spacing.md }}
+        >
+          <TouchableOpacity
+            onPress={() => handleLinkPress(resource.url)}
+            activeOpacity={0.8}
+          >
+            <View style={styles.resourceHeader}>
+              <resource.icon size={24} color="#45b7d1" />
+              <View style={styles.resourceContent}>
+                <Typography variant="subtitle" weight="semibold">
+                  {resource.title}
+                </Typography>
+                <Typography variant="body" color="secondary">
+                  {resource.description}
+                </Typography>
+              </View>
+              <ExternalLink size={22} color={theme.colors.textSecondary} />
+            </View>
+          </TouchableOpacity>
+        </Surface>
+      ))}
+    </View>
+  );
+
+  return (
+    <Container variant="gradient" padding="none">
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={[styles.header, { paddingHorizontal: theme.spacing.md }]}>
+          <Typography variant="h1" weight="bold" align="center">
+            Education Center
+          </Typography>
+          <Typography variant="body" color="secondary" align="center">
+            Learn to protect yourself from fraud
+          </Typography>
+        </View>
+
+        <Spacing size="xl" />
+
+        {/* Tab Navigation */}
+        <View style={[styles.tabContainer, { paddingHorizontal: theme.spacing.md }]}>
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              {
+                backgroundColor: selectedTab === "glossary" ? theme.colors.primary : theme.colors.surface,
+                borderColor: theme.colors.border,
+                borderWidth: 1,
+              },
+            ]}
+            onPress={() => setSelectedTab("glossary")}
+          >
+            <BookOpen
+              size={20}
+              color={selectedTab === "glossary" ? "white" : theme.colors.icon}
+            />
+            <Spacing horizontal size="sm" />
+            <Typography
+              variant="body"
+              weight="semibold"
+              style={{
+                color: selectedTab === "glossary" ? "white" : theme.colors.icon,
+              }}
             >
-              <Text style={styles.exampleIcon}>💡</Text>
-              <Text
-                style={[styles.glossaryExample, { color: theme.colors.text }]}
-              >
+              Glossary
+            </Typography>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              {
+                backgroundColor: selectedTab === "tips" ? theme.colors.primary : theme.colors.surface,
+                borderColor: theme.colors.border,
+                borderWidth: 1,
+              },
+            ]}
+            onPress={() => setSelectedTab("tips")}
+          >
+            <Lightbulb
+              size={20}
+              color={selectedTab === "tips" ? "white" : theme.colors.icon}
+            />
+            <Spacing horizontal size="sm" />
+            <Typography
+              variant="body"
+              weight="semibold"
+              style={{
+                color: selectedTab === "tips" ? "white" : theme.colors.icon,
+              }}
+            >
+              Tips
+            </Typography>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.tab,
+              {
+                backgroundColor: selectedTab === "resources" ? theme.colors.primary : theme.colors.surface,
+                borderColor: theme.colors.border,
+                borderWidth: 1,
+              },
+            ]}
+            onPress={() => setSelectedTab("resources")}
+          >
+            <ExternalLink
+              size={20}
+              color={selectedTab === "resources" ? "white" : theme.colors.icon}
+            />
+            <Spacing horizontal size="sm" />
+            <Typography
+              variant="body"
+              weight="semibold"
+              style={{
+                color: selectedTab === "resources" ? "white" : theme.colors.icon,
+              }}
+            >
+              Resources
+            </Typography>
+          </TouchableOpacity>
+        </View>
+
+        <Spacing size="lg" />
+
+        {/* Content */}
+        <View style={{ paddingHorizontal: theme.spacing.md }}>
+          {selectedTab === "glossary" && renderGlossary()}
+          {selectedTab === "tips" && renderTips()}
+          {selectedTab === "resources" && renderResources()}
+        </View>
+
+        <Spacing size="xl" />
+      </ScrollView>
+    </Container>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    paddingTop: 20,
+    paddingBottom: 10,
+    alignItems: "center",
+  },
+  tabContainer: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  tab: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+  },
+  tipHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  resourceHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  resourceContent: {
+    flex: 1,
+    marginLeft: 15,
+  },
+  emergencyContacts: {
+    gap: 8,
+  },
+  contactItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+});
+
+export default EducationScreen;
+
                 {item.example}
               </Text>
             </View>

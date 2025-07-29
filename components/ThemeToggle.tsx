@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { useTheme } from "../contexts/ThemeContext";
 import { Moon, Sun } from "lucide-react-native";
 
@@ -13,17 +13,17 @@ const ThemeToggle: React.FC = () => {
         {
           backgroundColor: theme.colors.card,
           borderColor: theme.colors.border,
+          ...theme.shadows.sm,
         },
       ]}
       onPress={toggleTheme}
+      activeOpacity={0.7}
     >
-      <Text style={[styles.toggleText, { color: theme.colors.text }]}>
-        {theme.isDark ? (
-          <Moon size={24} color="white" />
-        ) : (
-          <Sun size={24} color="orange" />
-        )}
-      </Text>
+      {theme.isDark ? (
+        <Moon size={24} color={theme.colors.icon} />
+      ) : (
+        <Sun size={24} color={theme.colors.warning} />
+      )}
     </TouchableOpacity>
   );
 };
@@ -36,14 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  toggleText: {
-    fontSize: 20,
   },
 });
 

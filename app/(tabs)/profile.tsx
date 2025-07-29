@@ -1,14 +1,11 @@
 import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   User,
   Trophy,
@@ -24,8 +21,16 @@ import {
   Shield,
   GraduationCap,
 } from "lucide-react-native";
+import { useTheme } from "../../contexts/ThemeContext";
+import { Container } from "../../components/ui/Container";
+import { Typography } from "../../components/ui/Typography";
+import { Surface } from "../../components/ui/Surface";
+import { Spacing } from "../../components/ui/Spacing";
+import { IconButton } from "../../components/ui/IconButton";
 
 const ProfileScreen = () => {
+  const { theme } = useTheme();
+
   const userStats = {
     schemesExposed: 12,
     redFlagsSpotted: 45,
@@ -81,80 +86,109 @@ const ProfileScreen = () => {
     (userStats.experiencePoints / userStats.nextLevelXP) * 100;
 
   return (
-    <LinearGradient colors={["#1a1a2e", "#16213e"]} style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
+    <Container variant="gradient" padding="none">
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.avatarContainer}>
-              <LinearGradient
-                colors={["#ff6b6b", "#4ecdc4"]}
-                style={styles.avatar}
-              >
+          <View style={[styles.header, { paddingHorizontal: theme.spacing.md }]}>
+            <Surface variant="elevated" radius="xl" padding="lg" style={styles.avatarContainer}>
                 <User size={40} color="white" />
-              </LinearGradient>
-            </View>
-            <Text style={styles.userName}>Fraud Fighter</Text>
-            <Text style={styles.userLevel}>{userStats.currentLevel}</Text>
+            </Surface>
+            <Spacing size="md" />
+            <Typography variant="h2" weight="bold" align="center">
+              Fraud Fighter
+            </Typography>
+            <Typography variant="subtitle" color="accent" align="center">
+              {userStats.currentLevel}
+            </Typography>
           </View>
+
+          <Spacing size="xl" />
 
           {/* Progress Section */}
-          <View style={styles.progressContainer}>
-            <Text style={styles.sectionTitle}>Progress</Text>
-            <View style={styles.progressCard}>
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
+              Progress
+            </Typography>
+            <Spacing size="md" />
+            <Surface variant="elevated" padding="lg" radius="lg">
               <View style={styles.progressHeader}>
-                <Text style={styles.progressText}>
+                <Typography variant="subtitle" weight="semibold">
                   {userStats.experiencePoints} / {userStats.nextLevelXP} XP
-                </Text>
-                <Text style={styles.progressPercentage}>
+                </Typography>
+                <Typography variant="subtitle" weight="bold" color="accent">
                   {Math.round(progressPercentage)}%
-                </Text>
+                </Typography>
               </View>
+              <Spacing size="sm" />
               <View style={styles.progressBar}>
                 <View
-                  style={[
-                    styles.progressFill,
-                    { width: `${progressPercentage}%` },
-                  ]}
+                  style={[styles.progressFill, { 
+                    width: `${progressPercentage}%`,
+                    backgroundColor: theme.colors.primary 
+                  }]}
                 />
               </View>
-              <Text style={styles.progressLabel}>
+              <Spacing size="sm" />
+              <Typography variant="caption" color="secondary" align="center">
                 {userStats.nextLevelXP - userStats.experiencePoints} XP to next
                 level
-              </Text>
+              </Typography>
+            </Surface>
+          </View>
+
+          <Spacing size="xl" />
+
+          {/* Stats Section */}
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
+              Your Stats
+            </Typography>
+            <Spacing size="md" />
+            <View style={styles.statsGrid}>
+              <Surface variant="elevated" padding="md" radius="lg" style={styles.statCard}>
+                <Brain size={24} color="#ff6b6b" />
+                <Spacing size="sm" />
+                <Typography variant="h3" weight="bold" align="center">
+                  {userStats.schemesExposed}
+                </Typography>
+                <Typography variant="caption" color="secondary" align="center">
+                  Schemes Exposed
+                </Typography>
+              </Surface>
+              <Surface variant="elevated" padding="md" radius="lg" style={styles.statCard}>
+                <Flag size={24} color="#4ecdc4" />
+                <Spacing size="sm" />
+                <Typography variant="h3" weight="bold" align="center">
+                  {userStats.redFlagsSpotted}
+                </Typography>
+                <Typography variant="caption" color="secondary" align="center">
+                  Red Flags Spotted
+                </Typography>
+              </Surface>
+              <Surface variant="elevated" padding="md" radius="lg" style={styles.statCard}>
+                <BookOpen size={24} color="#45b7d1" />
+                <Spacing size="sm" />
+                <Typography variant="h3" weight="bold" align="center">
+                  {userStats.storiesCompleted}
+                </Typography>
+                <Typography variant="caption" color="secondary" align="center">
+                  Stories Completed
+                </Typography>
+              </Surface>
+              <Surface variant="elevated" padding="md" radius="lg" style={styles.statCard}>
+                <Trophy size={24} color="#ffd93d" />
+                <Spacing size="sm" />
+                <Typography variant="h3" weight="bold" align="center">
+                  {userStats.badgesEarned}
+                </Typography>
+                <Typography variant="caption" color="secondary" align="center">
+                  Badges Earned
+                </Typography>
+              </Surface>
             </View>
           </View>
 
-          {/* Stats Section */}
-          <View style={styles.statsContainer}>
-            <Text style={styles.sectionTitle}>Your Stats</Text>
-            <View style={styles.statsGrid}>
-              <View style={styles.statCard}>
-                <Brain size={24} color="#ff6b6b" />
-                <Text style={styles.statValue}>{userStats.schemesExposed}</Text>
-                <Text style={styles.statLabel}>Schemes Exposed</Text>
-              </View>
-              <View style={styles.statCard}>
-                <Flag size={24} color="#4ecdc4" />
-                <Text style={styles.statValue}>
-                  {userStats.redFlagsSpotted}
-                </Text>
-                <Text style={styles.statLabel}>Red Flags Spotted</Text>
-              </View>
-              <View style={styles.statCard}>
-                <BookOpen size={24} color="#45b7d1" />
-                <Text style={styles.statValue}>
-                  {userStats.storiesCompleted}
-                </Text>
-                <Text style={styles.statLabel}>Stories Completed</Text>
-              </View>
-              <View style={styles.statCard}>
-                <Trophy size={24} color="#ffd93d" />
-                <Text style={styles.statValue}>{userStats.badgesEarned}</Text>
-                <Text style={styles.statLabel}>Badges Earned</Text>
-              </View>
-            </View>
-          </View>
+          <Spacing size="xl" />
 
           {/* Badges Section */}
           <View style={styles.badgesContainer}>
@@ -216,10 +250,114 @@ const ProfileScreen = () => {
           </View>
 
           {/* Settings Section */}
-          <View style={styles.settingsContainer}>
-            <Text style={styles.sectionTitle}>Settings</Text>
+          <View style={{ paddingHorizontal: theme.spacing.md }}>
+            <Typography variant="h4" weight="semibold">
+              Settings
+            </Typography>
+            <Spacing size="md" />
 
-            <TouchableOpacity style={styles.settingItem}>
+            <Surface variant="elevated" padding="none" radius="lg" style={{ marginBottom: theme.spacing.sm }}>
+              <TouchableOpacity style={styles.settingItem}>
+                <Bell size={24} color="#4ecdc4" />
+                <Typography variant="body" weight="medium" style={{ flex: 1, marginLeft: theme.spacing.md }}>
+                  Notifications
+                </Typography>
+                <Typography variant="h4" color="secondary">›</Typography>
+              </TouchableOpacity>
+            </Surface>
+
+            <Surface variant="elevated" padding="none" radius="lg" style={{ marginBottom: theme.spacing.sm }}>
+              <TouchableOpacity style={styles.settingItem}>
+                <Globe size={24} color="#45b7d1" />
+                <Typography variant="body" weight="medium" style={{ flex: 1, marginLeft: theme.spacing.md }}>
+                  Language
+                </Typography>
+                <Typography variant="h4" color="secondary">›</Typography>
+              </TouchableOpacity>
+            </Surface>
+
+            <Surface variant="elevated" padding="none" radius="lg" style={{ marginBottom: theme.spacing.sm }}>
+              <TouchableOpacity style={styles.settingItem}>
+                <HelpCircle size={24} color="#96ceb4" />
+                <Typography variant="body" weight="medium" style={{ flex: 1, marginLeft: theme.spacing.md }}>
+                  Help & Support
+                </Typography>
+                <Typography variant="h4" color="secondary">›</Typography>
+              </TouchableOpacity>
+            </Surface>
+
+            <Surface variant="elevated" padding="none" radius="lg" style={{ marginBottom: theme.spacing.sm }}>
+              <TouchableOpacity style={styles.settingItem}>
+                <Info size={24} color="#ffd93d" />
+                <Typography variant="body" weight="medium" style={{ flex: 1, marginLeft: theme.spacing.md }}>
+                  About
+                </Typography>
+                <Typography variant="h4" color="secondary">›</Typography>
+              </TouchableOpacity>
+            </Surface>
+
+            <Surface variant="elevated" padding="none" radius="lg">
+              <TouchableOpacity style={styles.settingItem} onPress={handleLogout}>
+                <LogOut size={24} color="#ff6b6b" />
+                <Typography variant="body" weight="medium" style={{ flex: 1, marginLeft: theme.spacing.md, color: "#ff6b6b" }}>
+                  Logout
+                </Typography>
+              </TouchableOpacity>
+            </Surface>
+          </View>
+
+          <Spacing size="xl" />
+        </ScrollView>
+    </Container>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    alignItems: "center",
+    paddingVertical: 30,
+  },
+  avatarContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff6b6b",
+  },
+  progressHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 4,
+  },
+  progressFill: {
+    height: "100%",
+    borderRadius: 4,
+  },
+  statsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  statCard: {
+    width: "48%",
+    alignItems: "center",
+  },
+  settingItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+  },
+});
+
+export default ProfileScreen;
+
               <Bell size={24} color="#4ecdc4" />
               <Text style={styles.settingText}>Notifications</Text>
               <Text style={styles.chevron}>›</Text>
