@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
-import { Home, AlertTriangle } from "lucide-react-native";
+import { Chrome as Home, TriangleAlert as AlertTriangle } from "lucide-react-native";
 import { Container } from "../components/ui/Container";
 import { Typography } from "../components/ui/Typography";
 import { Surface } from "../components/ui/Surface";

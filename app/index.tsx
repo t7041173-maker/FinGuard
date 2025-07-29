@@ -13,7 +13,7 @@ import Animated, {
   withTiming,
   interpolate,
 } from "react-native-reanimated";
-import { AlertTriangle, ArrowRight } from "lucide-react-native";
+import { TriangleAlert as AlertTriangle, ArrowRight } from "lucide-react-native";
 import { checkBackendConnection } from "../components/config";
 import { Container } from "../components/ui/Container";
 import { Typography } from "../components/ui/Typography";
